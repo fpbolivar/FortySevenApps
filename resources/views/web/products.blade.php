@@ -62,12 +62,6 @@
 
     </div><!-- /.container --> --}}
 
-
-
-
-
-
-        @if ($products && count($products))
             <div class="container">
                 <div class="row d-flex flex-wrap align-items-end mb-40">
                     <div class="col-md-6">
@@ -78,7 +72,7 @@
                     </div><!-- /.col-md-6 -->
                 </div><!-- /.row -->
                 <div class="row">
-                    @foreach ($products as $product)
+                    @forelse ($products as $product)
                         <a href="{{ route('single.product', [$product->id]) }}">
                             <div class="lqd-column col-md-3 col-sm-6">
 
@@ -92,7 +86,6 @@
 
                                         <div class="fancy-box-info">
                                             <h3 class="font-weight-semibold">{!! ucfirst(Str::limit($product->name, 20)) !!}</h3>
-                                            {{-- <span class="trainer">{!! ucfirst(Str::limit($product->description, 30)) !!}</span> --}}
                                         </div><!-- /.fancy-box-info -->
 
                                     </div><!-- /.fancy-box-contents -->
@@ -100,11 +93,15 @@
                                 </div><!-- /.fancy-box fancy-box-classes -->
                             </div><!-- /.lqd-column col-md-3 -->
                         </a>
-                    @endforeach
-
+                    @empty
+                    <div class="lqd-column col-md-12 col-sm-12 mb-50 text-center">
+                        <h2 class="lh-1 mb-0 mt-0 lqd-unit-animation-done" data-fittext="true" data-fittext-options="{&quot;compressor&quot;:0.65, &quot;maxFontSize&quot;:&quot;72&quot;, &quot;minFontSize&quot;:&quot;48&quot;}" style="font-size: 70.4615px; transform: translateY(0px); opacity: 1;">
+                            <strong>No Apps Found</strong>
+                        </h2>
+                    </div>
+                    @endforelse
                 </div><!-- /.row -->
             </div>
-        @endif
     </section><!-- /.vc_row pt-90 pb-90 -->
 
 
