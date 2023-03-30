@@ -20,7 +20,7 @@
             <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}"><a href="{{route('admin.dashboard')}}"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
             <li class="{{ Request::is('admin/apps') || Request::is('admin/app/create') ? 'active' : '' }}"><a href="{{route('admin.apps')}}"><i class="zmdi zmdi-apps"></i><span>Apps</span></a></li>
             <li class="{{ Request::is('admin/contacts') ? 'active' : '' }}"><a href="{{route('admin.contacts')}}"><i class="zmdi zmdi-hc-fw"></i><span>Contacts</span></a></li>
-            <li class="open_top"><a href="{{route('admin.logout')}}"><i class="zmdi zmdi-power"></i><span>Logout</span></a></li>
+            <li class="open_top"><a  class="universalClickEvent" data-title="Logout" data-body="Are you sure you want to logout ?" data-url="{{route('admin.logout')}}"><i class="zmdi zmdi-power"></i><span>Logout</span></a></li>
         </ul>
     </div>
 </aside>

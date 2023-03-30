@@ -10,7 +10,7 @@
 
     <link rel="shortcut icon" href="./favicon.png" />
 
-    <title>{{ env('APP_NAME') }}</title>
+    <title>{{ env('APP_NAME') }} | @yield('page-title')</title>
 
     <link rel="stylesheet" href="https://use.typekit.net/scc6wwx.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
@@ -22,7 +22,10 @@
     <link rel="stylesheet" href="{{ asset('assets/web/assets/css/themes/seo.css') }}" />
 	<!-- Head Libs -->
     <script async src="{{ asset('assets/web/assets/vendors/modernizr.min.js') }}"></script>
-
+    <!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 </head>
 <style>
     .mainbar-container {

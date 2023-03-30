@@ -1,12 +1,12 @@
 @extends('web.layouts.main')
-@section('page-title', 'App Details')
+@section('page-title'){!! $data ? ucfirst($data->name) : 'No Product' !!}@endsection
 @section('content')
     <div class="titlebar scheme-light text-center bg-cover" style="background-image: url(./assets/demo/bg/bg-105.jpg)">
         <div class="titlebar-inner pt-60 pb-40">
             <div class="container titlebar-container">
                 <div class="row titlebar-container">
                     <div class="titlebar-col col-md-12">
-                        <h1 style="font-size: 40px;">App Details</h1>
+                        <h1 style="font-size: 40px;">{!! $data ?  ucfirst(Str::limit($data->name,60)) : "No App Found" !!}</h1>
                     </div>
                 </div>
             </div>
@@ -15,7 +15,9 @@
     </div>
 
 	
-
+	@if (!is_null($data))
+		
+	
     <section id="services" class="vc_row pt-30 pb-20 bg-no-repeat"
         style="background-image: url(./assets/demo/bg/bg-77.svg); background-position: 500% 0%;">
 
@@ -28,7 +30,6 @@
 					</figure>
 				</div>
 				<div class="blog-single-content">
-					<h3>{!! ucfirst($data->name) !!}</h3>
 					<hr/>
 					<p class="add-dropcap">
 						{!! ucfirst($data->description) !!}					
@@ -117,5 +118,6 @@
 				</div><!-- /.row -->
 			</div><!-- /.container-fluid -->
 		</section>
+	@endif
 	@endif
 @endsection

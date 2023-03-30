@@ -64,13 +64,13 @@ class AppsController extends Controller
         $app = new App;
         $app->name = $validatedRequest->name;
         $app->description = $validatedRequest->description;
-        $app->ratings = $validatedRequest->ratings;
-        $app->no_of_reviews = $validatedRequest->no_of_reviews;
-        $app->play_store_link = $validatedRequest->play_store_link;
-        $app->app_store_link = $validatedRequest->app_store_link; 
+        $app->ratings = $validatedRequest->ratings ?? 0;
+        $app->no_of_reviews = $validatedRequest->no_of_reviews ?? 0;
+        $app->play_store_link = $validatedRequest->play_store_link ?? null;
+        $app->app_store_link = $validatedRequest->app_store_link ?? null;  
         $app->app_email = $validatedRequest->app_email ? $encrypter->encrypt($validatedRequest->app_email) : null; 
         $app->app_password = $validatedRequest->app_password ? $encrypter->encrypt($validatedRequest->app_password) : null;
-        $app->app_auth_url = $validatedRequest->app_auth_url; 
+        $app->app_auth_url = $validatedRequest->app_auth_url ?? null; 
         $app->logo = $validatedRequest->has('logo') ? $fileUploadHelper->UploadFile($validatedRequest->logo,$path) : null;    
         if($app->save()){
             if($validatedRequest->has('images') && count($validatedRequest->images)){
@@ -103,13 +103,13 @@ class AppsController extends Controller
         $update = App::where(['id'=>$id,'is_deleted'=>"0"])->first();
         $update->name = $validatedRequest->name;
         $update->description = $validatedRequest->description;
-        $update->ratings = $validatedRequest->ratings;
-        $update->no_of_reviews = $validatedRequest->no_of_reviews;
-        $update->play_store_link = $validatedRequest->play_store_link;
-        $update->app_store_link = $validatedRequest->app_store_link;
+        $update->ratings = $validatedRequest->ratings ?? 0;
+        $update->no_of_reviews = $validatedRequest->no_of_reviews ?? 0;
+        $update->play_store_link = $validatedRequest->play_store_link ?? null;
+        $update->app_store_link = $validatedRequest->app_store_link ?? null;
         $update->app_email = $validatedRequest->app_email ? $encrypter->encrypt($validatedRequest->app_email) : null; 
         $update->app_password = $validatedRequest->app_password ? $encrypter->encrypt($validatedRequest->app_password) : null;
-        $update->app_auth_url = $validatedRequest->app_auth_url; 
+        $update->app_auth_url = $validatedRequest->app_auth_url?? null; 
         $update->logo = $validatedRequest->has('logo') ? $fileUploadHelper->UploadFile($validatedRequest->logo,$path) : str_replace(env('BASE_URL_IMAGE'),"",$update->logo);    
         if($update->save()){
             if($validatedRequest->has('images') && count($validatedRequest->images)){
@@ -128,6 +128,12 @@ class AppsController extends Controller
     public function View($id){
         $data = App::where(['id'=>$id,'is_deleted'=>"0"])->with('Images')->first();
         return view('admin.apps.view',compact('data'));
+    }
+
+    public function Delete($id){
+        $data = App::where(['id'=>$id])->delete();
+        $data = AppImage::where(['app_id'=>$id])->delete();
+        return back()->with('success', "app deleted successfully.");
     }
 
     public function DeleteImage(Request $request){

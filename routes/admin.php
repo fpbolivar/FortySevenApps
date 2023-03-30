@@ -23,6 +23,7 @@ Route::middleware('admin')->group(function () {
 	Route::post('/app/update/{id}',[AppsController::class,'Update'])->name('app.update');
 	// view
 	Route::get('/app/view/{id}',[AppsController::class,'View'])->name('app.view');
+	Route::get('/app/delete/{id}',[AppsController::class,'Delete'])->name('app.delete');
 	// delete
 	Route::post('/app/image/delete',[AppsController::class,'DeleteImage'])->name('app.image.delete');
 

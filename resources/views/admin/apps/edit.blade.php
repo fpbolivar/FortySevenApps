@@ -78,7 +78,7 @@
                                         {!! $errors->first('app_password', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}                                        
                                     </div>
                                     <div class="form-group form-float col-md-12 col-sm-12">
-                                        <label class="form-label">App Auth Url <span class="help-block text text-danger">*</span></label>
+                                        <label class="form-label">App Auth Url</label>
                                         <input type="text" class="form-control" placeholder="App Auth Url" name="app_auth_url" value="{{old('app_auth_url',$edit->app_auth_url)}}">
                                         {!! $errors->first('app_auth_url', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}                                        
                                     </div>
@@ -88,23 +88,23 @@
                                         {!! $errors->first('name', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}                                        
                                     </div>
                                     <div class="form-group form-float col-md-6 col-sm-12">
-                                        <label class="form-label">Ratings <span class="help-block text text-danger">*</span></label>
-                                        <input type="number" min="1" max="5" class="form-control" placeholder="Ratings" name="ratings" required value="{{old('ratings',$edit->ratings)}}">
+                                        <label class="form-label">Ratings</label>
+                                        <input type="number" min="0" max="5" class="form-control" placeholder="Ratings" name="ratings" value="{{old('ratings',$edit->ratings)}}">
                                         {!! $errors->first('ratings', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
                                     <div class="form-group form-float col-md-4 col-sm-12">
-                                        <label class="form-label">No Of Reviews <span class="help-block text text-danger">*</span></label>
-                                        <input type="number" min="0" class="form-control input-numeric" placeholder="No Of Reviews" name="no_of_reviews" required value="{{old('no_of_reviews',$edit->no_of_reviews)}}">
+                                        <label class="form-label">No Of Reviews </label>
+                                        <input type="number" min="0" class="form-control input-numeric" placeholder="No Of Reviews" name="no_of_reviews" value="{{old('no_of_reviews',$edit->no_of_reviews)}}">
                                         {!! $errors->first('no_of_reviews', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
                                     <div class="form-group form-float col-md-4 col-sm-12">
-                                        <label class="form-label">Play Store Link <span class="help-block text text-danger">*</span></label>
-                                        <input type="text" class="form-control" placeholder="Play Store Link" name="play_store_link" required value="{{old('play_store_link',$edit->play_store_link)}}">
+                                        <label class="form-label">Play Store Link </label>
+                                        <input type="text" class="form-control" placeholder="Play Store Link" name="play_store_link" value="{{old('play_store_link',$edit->play_store_link)}}">
                                         {!! $errors->first('play_store_link', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
                                     <div class="form-group form-float col-md-4 col-sm-12">
-                                        <label class="form-label">App Store Link <span class="help-block text text-danger">*</span></label>
-                                        <input type="text" class="form-control" placeholder="App Store Link" name="app_store_link" required value="{{old('app_store_link',$edit->app_store_link)}}">
+                                        <label class="form-label">App Store Link </label>
+                                        <input type="text" class="form-control" placeholder="App Store Link" name="app_store_link" value="{{old('app_store_link',$edit->app_store_link)}}">
                                         {!! $errors->first('app_store_link', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
                                     <div class="form-group form-float col-md-6 col-sm-12">
@@ -118,7 +118,7 @@
                                         {!! $errors->first('logo', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
 									<div class="form-group form-float col-md-12 col-sm-12">
-										<label class="form-label">App Images ( 750*1624 ) <span class="help-block text text-danger">*</span>
+										<label class="form-label">App Images ( 750*1624 )
 											<a title="Add" class="btn btn-success btn-sm" style="color: white" data-toggle="tooltip" id="addImage">Add</a>
 										</label>
 									</div>
@@ -218,7 +218,7 @@
 			// append image
             $("#addImage").on("click", function() {
                 $(".multipleImages").append(
-                    "<div class='form-group float-left form-float col-md-3 col-sm-12 image '><a class='btn bg-danger btn-sm absolute text-white delete-image delete_Data delete-absolute'>Delete</a><input required name='images[]' type='file' class='dropifyMultiple' data-default-file='' data-allowed-file-extensions='jpeg jpg png'></div>"
+                    "<div class='form-group float-left form-float col-md-3 col-sm-12 image '><a class='btn bg-danger btn-sm absolute text-white delete-image delete_Data delete-absolute'>Delete</a><input name='images[]' type='file' class='dropifyMultiple' data-default-file='' data-allowed-file-extensions='jpeg jpg png'></div>"
                 );
                 $('.dropifyMultiple').dropify();
             });
@@ -233,67 +233,30 @@
         $("#validateForm").validate({
             errorClass: "text-danger",
             rules: {
+                app_email: {
+                    email: true,
+                },
                 name: {
                     required: true,
                 },
                 description: {
-                    required: true,
-                },
-                ratings: {
-                    required: true,
-                },
-                no_of_reviews: {
-                    required: true,
-                },
-                play_store_link: {
-                    required: true,
-                },
-                app_store_link: {
                     required: true,
                 },
             },
             messages: {
+                app_email: {
+                    email: 'please enter a valid email.',
+                },
                 name: {
                     required: "This field is required.",
                 },
                 description: {
-                    required: "This field is required.",
-                },
-                ratings: {
-                    required: "This field is required.",
-                },
-                no_of_reviews: {
-                    required: "This field is required.",
-                },
-                play_store_link: {
-                    required: "This field is required.",
-                },
-                app_store_link: {
                     required: "This field is required.",
                 },
             },
         });
 
-        function validateForm() {
-        let image = true
-        let error = false
-        $('.dropify-render').each(function() {
-            if (!$(this).html()) {
-                image = false
-            }
-        })
-        if (!image) {
-            $('.image-validate').html('This field is required')
-            error = true
-        } else {
-            $('.image-validate').html('')
-        }
-        if (error) {
-            return false
-        } else {
-            return true
-        }
-    }
+        
 
     </script>
 @endsection

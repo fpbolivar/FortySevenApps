@@ -74,11 +74,13 @@
                     render : function ( data, type, row, meta ) {
                 	  	const editUrl = `{{route('admin.app.edit', '')}}/${data}`;
                 	  	const viewUrl = `{{route('admin.app.view', '')}}/${data}`;
+                	  	const deleteUrl = `{{route('admin.app.delete', '')}}/${data}`;
                         const AppUrl = row.app_auth_url && row.app_email && row.app_password ? `<a target="_blank" style="color:white;" href="${row.app_auth_url}/${row.app_email}/${row.app_password}" class="btn btn-sm btn-primary"><i class="zmdi zmdi-apps zmdi-hc-fw" data-toggle="tooltip" title="Go To App Admin" data-original-title="fa fa-eye"></i></a>` : "";
                         return `
                         <a  href="${editUrl}"" class="btn btn-sm btn-success"><i class="zmdi zmdi-edit zmdi-hc-fw" data-toggle="tooltip" title="Edit App" data-original-title="fa fa-pencil-square-o"></i></a>
                         <a  href="${viewUrl}"" class="btn btn-sm btn-primary"><i class="zmdi zmdi-eye zmdi-hc-fw" data-toggle="tooltip" title="View App" data-original-title="fa fa-eye"></i></a>
                         ${AppUrl}
+                        <a  class="btn btn-sm btn-danger universalClickEvent text-white" data-title="Delete App" data-body="Are you sure you want to delete the App ?" data-url="${deleteUrl}" title="Delete App"><i class="zmdi zmdi-hc-fw"></i></a>
                         `;
                     },
                     sortable: false
@@ -118,8 +120,8 @@
                     data: 'play_store_link',
                     render : function ( data, type, row, meta ) {
                         return `
-                                <a title="Play store" target="_blank" href="${data}"><i class="zmdi zmdi-hc-fw social-icon-color social-icon-font-size"></i></a>
-                                <a title="App store" target="_blank" href="${row.app_store_link}"><i class="zmdi zmdi-hc-fw social-icon-color social-icon-font-size"></i></a>
+                                <a title="Play store" target="${data?'_blank':''}" href="${data??'#'}"><i class="zmdi zmdi-hc-fw social-icon-color social-icon-font-size"></i></a>
+                                <a title="App store" target="${row.app_store_link?'_blank':''}" href="${row.app_store_link ??'#'}"><i class="zmdi zmdi-hc-fw social-icon-color social-icon-font-size"></i></a>
                         `;
                     },
                 },       

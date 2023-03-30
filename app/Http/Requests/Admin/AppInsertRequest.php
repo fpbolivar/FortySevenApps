@@ -25,11 +25,7 @@ class AppInsertRequest extends FormRequest
     {
         return [
 			'name'=>'required',
-			'description'=>'required',
-			'ratings'=>'required',
-			'no_of_reviews'=>'required',
-			'play_store_link'=>'required',
-			'app_store_link'=>'required'
+			'description'=>'required'
         ];
     }
 
@@ -41,11 +37,7 @@ class AppInsertRequest extends FormRequest
     {
         return [
             'name.required'=>'required',
-			'description.required'=>'required',
-			'ratings.required'=>'required',
-			'no_of_reviews.required'=>'required',
-			'play_store_link.required'=>'required',
-			'app_store_link.required'=>'required'
+			'description.required'=>'required'
         ];
     }
 }

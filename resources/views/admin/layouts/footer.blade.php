@@ -1,4 +1,17 @@
-
+<div class="modal fade" id="universalModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="universalModalLabel"></h4>
+            </div>
+            <div class="modal-body" id="universalModalBody"> </div>
+            <div class="modal-footer">
+                <a id="universalModalUrl" type="button" class="btn btn-default btn-round waves-effect">Submit</a>
+                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Jquery Core Js --> 
 <script src="{{asset('assets/admin/assets/bundles/libscripts.bundle.js')}}"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) --> 
 <script src="{{asset('assets/admin/assets/bundles/vendorscripts.bundle.js')}}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
@@ -45,6 +58,12 @@
 @yield('js')
 
 <script>
+    $("div").delegate(".universalClickEvent", "click", function() {
+        $('#universalModalLabel').html($(this).data('title'));
+        $('#universalModalBody').html($(this).data('body'));
+        $('#universalModalUrl').attr("href",$(this).data('url'));
+        $("#universalModal").modal('show');
+    });   
     //START: Password Eye Button
     function showHidePassword(parent, child) {
         // .children

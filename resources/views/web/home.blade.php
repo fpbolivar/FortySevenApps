@@ -1,5 +1,5 @@
 @extends('web.layouts.main')
-@section('page-title', 'Dashboard')
+@section('page-title', 'Home')
 @section('content')
 @include('web.sections.one')  
 @include('web.sections.how')  
