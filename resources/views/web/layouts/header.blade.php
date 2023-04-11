@@ -78,7 +78,26 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-    
+.share-qr{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.social-icon-custom{
+    display: flex !important;
+    flex-direction: column;
+    row-gap: 15px;
+    /* justify-content: center;
+    align-items: center; */
+    font-size: 12px;
+    line-height: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.social-icon-custom img{
+    height: 60px;
+}
 </style>
 
 <body data-mobile-nav-trigger-alignment="right" data-mobile-nav-align="left" data-mobile-nav-style="modern"

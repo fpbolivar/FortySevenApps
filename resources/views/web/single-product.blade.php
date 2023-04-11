@@ -25,8 +25,8 @@
 
             <div class="col-md-12">
 				<div class="col-md-12" style="justify-content: center;display: flex;">
-					<figure class="fancy-box-image fixed-product-image">
-						<img src="{!! asset($data->logo ? $data->logo : 'assets/web/assets/demo/misc/carousel-item-4.jpg') !!}">
+					<figure class="fancy-box-image fixed-product-image" style="justify-content: center;">
+						<img style="height:100%;" style="" src="{!! asset($data->logo ? $data->logo : 'assets/web/assets/demo/misc/carousel-item-4.jpg') !!}">
 					</figure>
 				</div>
 				<div class="blog-single-content">
@@ -41,21 +41,30 @@
 						<a rel="tag">Ratings ({{$data->ratings ?? 0}})</a>
 						<a rel="tag">No Of Reviews ({{$data->no_of_reviews  ?? 0}})</a>
 					</span>
-					
 					<span class="share-links">
+						
 						{{-- <span class="text-uppercase ltr-sp-1">Download From</span> --}}
-						<ul class="social-icon">
+						<ul class="social-icon-custom social-icon">
+							<li style="text-align: center;">
+								<a rel="tag">Available On</a>
+							</li>
 							<li>
 								<a target="_blank" href="{{$data->app_store_link ?? "#"}}">
-									<img style="height: 50px;" src="{{asset('assets/appstore.png')}}" alt="appstore">
+									<img src="{{asset('assets/appstore.png')}}" alt="appstore">
 								</a>
 							</li>
 							<li>
 								<a target="_blank" href="{{$data->play_store_link ?? "#"}}">
-									<img style="height: 50px;" src="{{asset('assets/playstore.png')}}" alt="playstore">
+									<img src="{{asset('assets/playstore.png')}}" alt="playstore">
 								</a>
 							</li>
 						</ul><!-- /.social-icon -->
+						@if ($data->app_qr)
+							<span class="share-qr">
+								<a rel="tag">Scan QR Code To Download</a>
+								<img style="width: 150px;height: 150px;" src="{{$data->app_qr}}" alt="appstore">
+							</span>
+						@endif
 					</span><!-- /.share-links -->
 					
 				</footer><!-- /.blog-single-footer entry-footer -->

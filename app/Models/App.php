@@ -26,4 +26,11 @@ class App extends Model
             get: fn ($value) => $value ? env('BASE_URL_IMAGE').$value : null,
         );
     }
+
+    protected function appQr(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? env('BASE_URL_IMAGE').$value : null,
+        );
+    }
 }

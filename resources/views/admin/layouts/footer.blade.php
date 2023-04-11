@@ -6,7 +6,7 @@
             </div>
             <div class="modal-body" id="universalModalBody"> </div>
             <div class="modal-footer">
-                <a id="universalModalUrl" type="button" class="btn btn-default btn-round waves-effect">Submit</a>
+                <a id="universalModalUrl" type="button" class="btn btn-default waves-effect">Submit</a>
                 <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -61,6 +61,7 @@
     $("div").delegate(".universalClickEvent", "click", function() {
         $('#universalModalLabel').html($(this).data('title'));
         $('#universalModalBody').html($(this).data('body'));
+        $('#universalModalUrl').html($(this).data('submit'));
         $('#universalModalUrl').attr("href",$(this).data('url'));
         $("#universalModal").modal('show');
     });   

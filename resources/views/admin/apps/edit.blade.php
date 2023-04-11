@@ -107,17 +107,23 @@
                                         <input type="text" class="form-control" placeholder="App Store Link" name="app_store_link" value="{{old('app_store_link',$edit->app_store_link)}}">
                                         {!! $errors->first('app_store_link', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
-                                    <div class="form-group form-float col-md-6 col-sm-12">
-                                        <label class="form-label">Description <span class="help-block text text-danger">*</span></label>
-                                        <textarea rows="9" type="text" class="ckeditor form-control" placeholder="Description" name="description" required >{!!old('description',$edit->description)!!}</textarea>
-                                        {!! $errors->first('description', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
-                                    </div>
                                     <div class="form-group form-float col-md-6 col-sm-12 app-logo">
                                         <label class="form-label">App Logo ( 250*250 ) <span class="help-block text text-danger">*</span></label>
                                         <input name="logo" type="file" class="dropifySingle" data-default-id="{{$edit->id}}" data-default-file="{{$edit->logo}}" data-allowed-file-extensions="jpeg jpg png">
                                         {!! $errors->first('logo', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
-									<div class="form-group form-float col-md-12 col-sm-12">
+                                    <div class="form-group form-float col-md-6 col-sm-12 app-logo">
+                                        <label class="form-label">QR Code ( 250*250 )</label>
+                                        <input name="app_qr" type="file" class="dropifySingleQr" data-default-id="{{$edit->id}}" data-default-file="{{$edit->app_qr}}" data-allowed-file-extensions="jpeg jpg png">
+                                        {!! $errors->first('app_qr', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
+                                    </div>
+                                    <div class="form-group form-float col-md-12 col-sm-12">
+                                        <label class="form-label">Description <span class="help-block text text-danger">*</span></label>
+                                        <textarea data-error="#errorDescription" id="editor1" rows="9" type="text" class="editor1 form-control" placeholder="Description" name="description" required ></textarea>
+                                        <span id="errorDescription" class="text-danger"></span>
+                                        {!! $errors->first('description', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
+                                    </div>
+                                    <div class="form-group form-float col-md-12 col-sm-12">
 										<label class="form-label">App Images ( 750*1624 )
 											<a title="Add" class="btn btn-success btn-sm" style="color: white" data-toggle="tooltip" id="addImage">Add</a>
 										</label>
@@ -160,9 +166,26 @@
 @endsection
 @section('js')
     <script type="text/javascript">
+        CKEDITOR.replace('editor1');
+        CKEDITOR.instances.editor1.setData('{!!old('description',$edit->description)!!}');
+
         let drMulEvent = $('.dropifyMultiple').dropify();
         let drSinEvent = $('.dropifySingle').dropify();
+        let drQrEvent = $('.dropifySingleQr').dropify();
 		
+        drQrEvent.on('dropify.beforeClear', function(event, element){
+            if(confirm("Do you really want to delete \"" + element.file.name + "\" ?")){
+                let imageId = element.settings.defaultId;
+                deleteFile('qr',imageId);
+                return true;
+            }
+            return false;
+
+		});
+        drQrEvent.on('dropify.afterClear', function(event, element){
+			alert('File deleted');
+		});
+
 		drMulEvent.on('dropify.beforeClear', function(event, element){
             if(confirm("Do you really want to delete \"" + element.file.name + "\" ?")){
                 let imageId = element.settings.defaultId;
@@ -232,15 +255,22 @@
 
         $("#validateForm").validate({
             errorClass: "text-danger",
+            ignore: [],
             rules: {
                 app_email: {
                     email: true,
                 },
                 name: {
-                    required: true,
+                    required: true
                 },
                 description: {
-                    required: true,
+                    required:function(e) {
+                        let data = CKEDITOR.instances.editor1.getData().replace(/<[^>]*>/gi, '').length;
+                        if(!data){
+                            return true;
+                        }
+                        return false;
+                    },
                 },
             },
             messages: {
@@ -254,9 +284,15 @@
                     required: "This field is required.",
                 },
             },
+            errorPlacement: function(error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).html(error)
+                } else {
+                    error.insertAfter(element);
+                }
+            },
         });
-
-        
 
     </script>
 @endsection

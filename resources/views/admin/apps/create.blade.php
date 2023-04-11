@@ -66,7 +66,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="body">
-                            <form id="validateForm" action="{{route('admin.app.insert')}}" method="POST" enctype='multipart/form-data' onsubmit="return validateForm()">
+                            <form id="validateForm" action="{{route('admin.app.insert')}}" method="POST" enctype='multipart/form-data'>
                             	@csrf
                                 @include('admin.layouts.message')
                             	<div class="row multipleImages">
@@ -110,16 +110,23 @@
                                         <input type="text" class="form-control" placeholder="App Store Link" name="app_store_link" value="{{old('app_store_link')}}">
                                         {!! $errors->first('app_store_link', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
-                                    <div class="form-group form-float col-md-6 col-sm-12">
-                                        <label class="form-label">Description <span class="help-block text text-danger">*</span></label>
-                                        <textarea class="ckeditor form-control" rows="9" placeholder="Description" name="description" required value="{{old('description')}}"></textarea>
-                                        {!! $errors->first('description', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
-                                    </div>
                                     <div class="form-group form-float col-md-6 col-sm-12 app-logo">
                                         <label class="form-label">App Logo ( 250*250 ) <span class="help-block text text-danger">*</span></label>
                                         <input required name="logo" type="file" class="dropifySingle" data-default-file="" data-allowed-file-extensions="jpeg jpg png">
                                         {!! $errors->first('logo', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
                                     </div>
+                                    <div class="form-group form-float col-md-6 col-sm-12 app-logo">
+                                        <label class="form-label">QR Code ( 250*250 ) </label>
+                                        <input name="app_qr" type="file" class="dropifySingle" data-default-file="" data-allowed-file-extensions="jpeg jpg png">
+                                        {!! $errors->first('app_qr', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
+                                    </div>
+                                    <div class="form-group form-float col-md-12 col-sm-12">
+                                        <label class="form-label">Description <span class="help-block text text-danger">*</span></label>
+                                        <textarea data-error="#errorDescription" id="editor1" class="editor1 form-control" rows="9" placeholder="Description" name="description" required value="{{old('description')}}"></textarea>
+                                        <span id="errorDescription" class="text-danger"></span>
+                                        {!! $errors->first('description', '<div class="col-md-12 px-0"><span class="help-block text text-danger">:message</span></div>') !!}
+                                    </div>
+                                    
                                     <div class="form-group form-float col-md-12 col-sm-12">
                                         <label class="form-label">App Images  ( 750*1624 )
                                             <a title="Add" class="btn btn-success btn-sm" style="color: white" data-toggle="tooltip" id="addImage">Add</a>
@@ -145,6 +152,7 @@
 @endsection
 @section('js')
 <script type="text/javascript">
+        CKEDITOR.replace('editor1');
         $('.dropifyMultiple').dropify();
         $('.dropifySingle').dropify();
         $(document).ready(function() {
@@ -161,6 +169,7 @@
 
         $("#validateForm").validate({
             errorClass: "text-danger",
+            ignore: [],
             rules: {
                 app_email: {
                     email: true,
@@ -169,7 +178,13 @@
                     required: true,
                 },
                 description: {
-                    required: true,
+                    required:function(e) {
+                        let data = CKEDITOR.instances.editor1.getData().replace(/<[^>]*>/gi, '').length;
+                        if(!data){
+                            return true
+                        }
+                        return false;
+                    },
                 },
             },
             messages: {
@@ -182,6 +197,14 @@
                 description: {
                     required: "This field is required.",
                 },
+            },
+            errorPlacement: function(error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).html(error)
+                } else {
+                    error.insertAfter(element);
+                }
             },
         });
     </script>

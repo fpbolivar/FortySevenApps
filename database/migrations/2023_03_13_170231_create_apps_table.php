@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('app_email')->nullable();
             $table->text('app_password')->nullable();
             $table->text('app_auth_url')->nullable();
+            $table->text('app_qr')->nullable();
             $table->enum('is_deleted',['0','1'])->default('0');
             $table->timestamps();
         });

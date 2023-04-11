@@ -103,7 +103,7 @@
                                         </div><!-- /.col-md-6 -->
                                         <div class="lqd-column col-md-6 mb-0">
                                             <textarea class="{{$errors->first(
-                                                'message') ? "mb-10" : "mb-10"}}" cols="10" rows="6" name="message" aria-required="true" aria-invalid="false" placeholder="Message  *"
+                                                'message') ? "mb-10" : "mb-10"}}" cols="10" rows="7" name="message" aria-required="true" aria-invalid="false" placeholder="Message  *"
                                                 required=""></textarea>
                                             {!! $errors->first(
                                                 'message',

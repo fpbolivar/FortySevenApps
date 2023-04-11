@@ -61,6 +61,7 @@ class AppsController extends Controller
         $encrypter = new \Illuminate\Encryption\Encrypter(env('ENCRYPTION_KEY_VALUE'), 'AES-128-CBC');
         $path = 'files-data/app-logo';
         $pathImages = 'files-data/app-images';
+        $pathImagesQr = 'files-data/app-qr';
         $app = new App;
         $app->name = $validatedRequest->name;
         $app->description = $validatedRequest->description;
@@ -72,6 +73,7 @@ class AppsController extends Controller
         $app->app_password = $validatedRequest->app_password ? $encrypter->encrypt($validatedRequest->app_password) : null;
         $app->app_auth_url = $validatedRequest->app_auth_url ?? null; 
         $app->logo = $validatedRequest->has('logo') ? $fileUploadHelper->UploadFile($validatedRequest->logo,$path) : null;    
+        $app->app_qr = $validatedRequest->has('app_qr') ? $fileUploadHelper->UploadFile($validatedRequest->app_qr,$pathImagesQr) : str_replace(env('BASE_URL_IMAGE'),"",$update->app_qr);
         if($app->save()){
             if($validatedRequest->has('images') && count($validatedRequest->images)){
                 foreach ($validatedRequest->images as $image) {
@@ -100,6 +102,7 @@ class AppsController extends Controller
         $encrypter = new \Illuminate\Encryption\Encrypter(env('ENCRYPTION_KEY_VALUE'), 'AES-128-CBC');
         $path = 'files-data/app-logo';
         $pathImages = 'files-data/app-images';
+        $pathImagesQr = 'files-data/app-qr';
         $update = App::where(['id'=>$id,'is_deleted'=>"0"])->first();
         $update->name = $validatedRequest->name;
         $update->description = $validatedRequest->description;
@@ -111,6 +114,7 @@ class AppsController extends Controller
         $update->app_password = $validatedRequest->app_password ? $encrypter->encrypt($validatedRequest->app_password) : null;
         $update->app_auth_url = $validatedRequest->app_auth_url?? null; 
         $update->logo = $validatedRequest->has('logo') ? $fileUploadHelper->UploadFile($validatedRequest->logo,$path) : str_replace(env('BASE_URL_IMAGE'),"",$update->logo);    
+        $update->app_qr = $validatedRequest->has('app_qr') ? $fileUploadHelper->UploadFile($validatedRequest->app_qr,$pathImagesQr) : str_replace(env('BASE_URL_IMAGE'),"",$update->app_qr);
         if($update->save()){
             if($validatedRequest->has('images') && count($validatedRequest->images)){
                 foreach ($validatedRequest->images as $image) {
@@ -142,6 +146,8 @@ class AppsController extends Controller
                 $edit = App::whereid($request->id)->update(['logo'=>null]);
             }elseif($request->type == 'image'){
                 $edit = AppImage::whereid($request->id)->update(['is_deleted'=>'1']);
+            }elseif($request->type == 'qr'){
+                $edit = App::whereid($request->id)->update(['app_qr'=>null]);
             }
         }
         return response()->json(["status"=>200,'message'=> 'file deleted successfully.']);

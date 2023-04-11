@@ -80,7 +80,7 @@
                         <a  href="${editUrl}"" class="btn btn-sm btn-success"><i class="zmdi zmdi-edit zmdi-hc-fw" data-toggle="tooltip" title="Edit App" data-original-title="fa fa-pencil-square-o"></i></a>
                         <a  href="${viewUrl}"" class="btn btn-sm btn-primary"><i class="zmdi zmdi-eye zmdi-hc-fw" data-toggle="tooltip" title="View App" data-original-title="fa fa-eye"></i></a>
                         ${AppUrl}
-                        <a  class="btn btn-sm btn-danger universalClickEvent text-white" data-title="Delete App" data-body="Are you sure you want to delete the App ?" data-url="${deleteUrl}" title="Delete App"><i class="zmdi zmdi-hc-fw"></i></a>
+                        <a  class="btn btn-sm btn-danger universalClickEvent text-white" data-title="Delete App" data-submit="Delete" data-body="Are you sure you want to delete the App ?" data-url="${deleteUrl}" title="Delete App"><i class="zmdi zmdi-hc-fw"></i></a>
                         `;
                     },
                     sortable: false
@@ -102,7 +102,6 @@
                 { 
                     data: 'ratings',
                     render : function ( data, type, row, meta ) {
-                        console.log("data",data);
                         let span = `<span class="rating rating-index"><label>`
                         if(data){
                             for (let i = 0; i < data; i++) {

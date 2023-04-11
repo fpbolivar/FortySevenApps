@@ -38,6 +38,12 @@
                             <a href="#"><img src="{{$data->logo ?? ""}}" class="shadow" width="200px" alt="profile-image"></a>
                             <h4 class="m-t-10">{{$data->name ?? "N/A"}}</h4>                            
                             <div class="row">
+                                @if ($data->app_qr)
+                                    <div class="col-12">                                    
+                                        <small>QR Code</small>
+                                        <h5><img src="{{$data->app_qr}}" class="shadow" width="150px" alt="profile-image"></h5>
+                                    </div>
+                                @endif
                                 <div class="col-12">
                                     <ul class="social-links list-unstyled">
                                         <li><a title="play store" target="_blank" href="{{$data->play_store_link ?? "#"}}"><i class="zmdi zmdi-hc-fw"></i></a></li>
