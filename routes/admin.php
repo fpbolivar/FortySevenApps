@@ -5,12 +5,12 @@ use App\Http\Controllers\Admin\AppsController;
 
 
 
-Route::middleware('admin.guest')->group(function () {
+Route::group(['middleware' => \App\Http\Middleware\RedirectIfAdmin::class],function () {
 	Route::get('/login',[AdminLoginController::class,'Login'])->name('login');
 	Route::post('/login/authenticate',[AdminLoginController::class,'LoginAuthenticate'])->name('login.authenticate');
 });
 
-Route::middleware('admin')->group(function () {
+Route::group(['middleware' => \App\Http\Middleware\RedirectIfNotAdmin::class],function () {
 	Route::get('/dashboard',[DashboardController::class,'Dashboard'])->name('dashboard');
 	// apps
 	Route::get('/apps',[AppsController::class,'Index'])->name('apps');
